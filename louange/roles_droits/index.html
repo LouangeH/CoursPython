@@ -1,0 +1,67 @@
+{% extends 'app/layouts/default.html' %}
+{% block content %}
+<div class="card mt-3">
+
+  {% if messages %}
+      {% for message in messages %}
+          <p class="alert alert-success w-100 h-100">{{message}}</p>
+      {%endfor %}
+  {% endif %}
+     
+	<div class="row">
+    
+	 <div class="col-12 col-lg-12">
+    <a href="{% url 'rolesDroits_add' %}" class="btn btn-primary">Ajouter les roles et droits</a>
+    <br>
+	   <div class="card">
+	     <div class="card-header">Role et Droit
+		  <div class="card-action">
+             <div class="dropdown">
+             <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
+              <i class="icon-options"></i>
+             </a>
+              <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" href="javascript:void();">Action</a>
+              <a class="dropdown-item" href="javascript:void();">Another action</a>
+              <a class="dropdown-item" href="javascript:void();">Something else here</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="javascript:void();">Separated link</a>
+               </div>
+              </div>
+             </div>
+		 </div>
+	       <div class="table-responsive">
+                 <table class="table align-items-center table-flush table-borderless">
+                  <thead>
+                   <tr>
+                     <th>#</th>
+                     <th>Role</th>
+                     <th>Droit</th>
+                     <th>action</th>
+                   </tr>
+                   </thead>
+                   <tbody>
+                    {% for role_droit in roles_droits %}
+                    <tr>
+                       <td>{{ role_droit.id}}</td>
+                       <td>{{ role_droit.role}}</td>
+                       <td>{{ role_droit.droit}}</td>
+                       <td>
+                        <div class="row">
+                          <a href="{% url 'rolesDroits_edit' role_droit.id %}" class="btn btn-primary">Edit</a>
+                          <form action="{% url 'rolesDroits_delete' role_droit.id %}" method="post">
+                              {% csrf_token %}
+                              <button type="submit" onclick="return confirm('Are sure you want to delete ?')"
+                                  class="btn btn-danger btn-sm">Delete</button>
+                          </form>
+                      </div>
+                       </td>
+                   </tr>
+                   {% endfor %}
+                 </tbody></table>
+               </div>
+	   </div>
+	 </div>
+	</div><!--End Row-->
+
+    {% endblock %}

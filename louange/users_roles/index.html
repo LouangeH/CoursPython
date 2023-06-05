@@ -1,0 +1,58 @@
+{% extends 'app/layouts/default.html' %}
+{% block content %}  
+	  
+	<div class="row">
+	 <div class="col-12 col-lg-12">
+        <a href="{% url 'users_roles_add' %}" class="btn btn-primary">New</a>
+	   <div class="card">
+	     <div class="card-header">User Role
+		  <div class="card-action">
+             <div class="dropdown">
+             <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
+              <i class="icon-options"></i>
+             </a>
+              <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" href="javascript:void();">Action</a>
+              <a class="dropdown-item" href="javascript:void();">Another action</a>
+              <a class="dropdown-item" href="javascript:void();">Something else here</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="javascript:void();">Separated link</a>
+               </div>
+              </div>
+             </div>
+		 </div>
+         
+	       <div class="table-responsive">
+                 <table class="table align-items-center table-flush table-borderless">
+                  <thead>
+                   <tr>
+                     <th>ID</th>
+                     <th>Utilisateur</th>
+                     <th>Son Role</th>
+                   </tr>
+                   </thead>
+                   <tbody>
+                    {% for user_role in users_roles %}
+                <tr>
+                    <td>{{ user_role.id }}</td>
+                    <td>{{ user_role.utilisateur }}</td>
+                    <td>{{ user_role.role }}</td>
+                    <td><div class="card-footer">
+                        <a href="{% url 'users_roles_edit' user_role.id %}" class="btn btn-secondary">Edit</a>
+                        <form action="{% url 'users_roles_delete' user_role.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" onclick="return confirm('Voulez-vous supprimer!!!')"
+                                class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </div></td>
+					<td><div class="progress shadow" style="height: 3px;">
+                          <div class="progress-bar" role="progressbar" style="width: 90%"></div>
+                        </div></td>
+                   </tr>
+                   {% endfor %}
+                 </tbody></table>
+               </div>
+	   </div>
+	 </div>
+	</div><!--End Row-->
+{% endblock %}
